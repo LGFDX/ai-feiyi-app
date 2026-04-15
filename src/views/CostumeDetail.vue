@@ -2,7 +2,9 @@
 import { computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { costumeItems } from '../data/costumeData'
-import { cultureItems } from '../data/cultureData'
+import { cultureItems } from '../data/feiyiData'
+
+const defaultCover = `${import.meta.env.BASE_URL}images/default-costume.jpg`
 
 const route = useRoute()
 
@@ -27,13 +29,19 @@ const siblingCostumes = computed(() => {
     .filter((item) => item.type === costume.value.type && item.id !== costume.value.id)
     .slice(0, 3)
 })
+
+function onImageError(event) {
+  if (event.target.src !== defaultCover) {
+    event.target.src = defaultCover
+  }
+}
 </script>
 
 <template>
   <section v-if="costume" class="space-y-4">
     <article class="opera-card p-4 md:p-6">
       <div class="head-grid">
-        <img :src="costume.cover" :alt="costume.name" class="head-cover" />
+        <img :src="costume.cover" :alt="costume.name" class="head-cover" @error="onImageError" />
         <div>
           <p class="text-sm text-[#F5F5DC]/80">{{ costume.dynasty }} · {{ costume.type }}</p>
           <h2 class="mt-1 text-2xl font-semibold tracking-[0.08em]">{{ costume.name }}</h2>

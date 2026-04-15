@@ -85,6 +85,7 @@ const viewerRotate = ref(0)
 
 const noticeMessage = ref('')
 const networkOffline = ref(typeof navigator !== 'undefined' ? !navigator.onLine : false)
+const defaultCover = `${import.meta.env.BASE_URL}images/default-costume.jpg`
 
 let stream = null
 let progressTimer = null
@@ -152,14 +153,14 @@ const formattedUploadSize = computed(() => {
 const currentGeneratedPreview = computed(() => activeResult.value?.url || '')
 
 const heroBgStyle = computed(() => ({
-  '--hero-bg-image': `url('${import.meta.env.BASE_URL}images/juanhua.svg')`,
+  '--hero-bg-image': `url('${import.meta.env.BASE_URL}images/juanhua.jpg')`,
 }))
 
 const effectPreviewSrc = computed(
   () =>
     currentGeneratedPreview.value ||
     originalImageUrl.value ||
-    `${import.meta.env.BASE_URL}images/xichai.svg`,
+    `${import.meta.env.BASE_URL}images/xichai-liyi.jpg`,
 )
 
 const livePreviewStyle = computed(() => {
@@ -195,6 +196,12 @@ function showToast(message) {
   toastTimer = setTimeout(() => {
     noticeMessage.value = ''
   }, 2400)
+}
+
+function onStaticImageError(event) {
+  if (event.target.src !== defaultCover) {
+    event.target.src = defaultCover
+  }
 }
 
 function openFileDialog() {
@@ -1063,6 +1070,7 @@ onBeforeUnmount(() => {
               alt="效果预览图"
               class="effect-preview-image mt-2"
               :style="livePreviewStyle"
+              @error="onStaticImageError"
               @click="openViewer(effectPreviewSrc, '效果预览图')"
             />
           </div>

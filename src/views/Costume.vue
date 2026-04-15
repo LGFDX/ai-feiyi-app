@@ -3,6 +3,8 @@ import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 import { costumeFilters, costumeItems } from '../data/costumeData'
 
+const defaultCover = `${import.meta.env.BASE_URL}images/default-costume.jpg`
+
 const selectedDynasty = ref('全部')
 const selectedType = ref('全部')
 const keyword = ref('')
@@ -33,6 +35,12 @@ watch([selectedDynasty, selectedType, keyword], () => {
 function loadMore() {
   if (hasMore.value) {
     visibleCount.value += 4
+  }
+}
+
+function onCardImageError(event) {
+  if (event.target.src !== defaultCover) {
+    event.target.src = defaultCover
   }
 }
 
@@ -103,7 +111,7 @@ onBeforeUnmount(() => {
           :to="`/costume/${item.id}`"
           class="opera-card costume-item"
         >
-          <img :src="item.cover" :alt="item.name" class="costume-cover" />
+          <img :src="item.cover" :alt="item.name" class="costume-cover" @error="onCardImageError" />
           <div class="costume-info">
             <h3>{{ item.name }}</h3>
             <p class="meta">{{ item.dynasty }} · {{ item.type }}</p>

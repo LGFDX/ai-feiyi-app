@@ -1,7 +1,9 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
-import { cultureCategories, cultureItems } from '../data/cultureData'
+import { cultureCategories, cultureItems } from '../data/feiyiData'
+
+const defaultCover = `${import.meta.env.BASE_URL}images/default-costume.jpg`
 
 const selectedCategory = ref('全部')
 const keyword = ref('')
@@ -27,6 +29,12 @@ const hasMore = computed(() => visibleItems.value.length < filteredItems.value.l
 function loadMore() {
   if (hasMore.value) {
     visibleCount.value += 4
+  }
+}
+
+function onCardImageError(event) {
+  if (event.target.src !== defaultCover) {
+    event.target.src = defaultCover
   }
 }
 
@@ -100,7 +108,7 @@ onBeforeUnmount(() => {
           :to="`/culture/${item.id}`"
           class="opera-card culture-item"
         >
-          <img :src="item.cover" :alt="item.name" class="culture-cover" />
+          <img :src="item.cover" :alt="item.name" class="culture-cover" @error="onCardImageError" />
           <div class="culture-info">
             <p class="meta">{{ item.category }} · {{ item.region }}</p>
             <h3>{{ item.name }}</h3>

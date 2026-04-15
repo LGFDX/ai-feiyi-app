@@ -1,8 +1,10 @@
 <script setup>
 import { computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
-import { cultureItems } from '../data/cultureData'
+import { cultureItems } from '../data/feiyiData'
 import { costumeItems } from '../data/costumeData'
+
+const defaultCover = `${import.meta.env.BASE_URL}images/default-costume.jpg`
 
 const route = useRoute()
 
@@ -32,13 +34,19 @@ const relatedCostumes = computed(() => {
     currentItem.value.relatedCostumeIds.includes(item.id),
   )
 })
+
+function onImageError(event) {
+  if (event.target.src !== defaultCover) {
+    event.target.src = defaultCover
+  }
+}
 </script>
 
 <template>
   <section v-if="currentItem" class="space-y-4">
     <article class="opera-card p-4 md:p-6">
       <div class="detail-head">
-        <img :src="currentItem.cover" :alt="currentItem.name" class="detail-cover" />
+        <img :src="currentItem.cover" :alt="currentItem.name" class="detail-cover" @error="onImageError" />
         <div>
           <p class="text-sm text-[#F5F5DC]/80">{{ currentItem.level }}</p>
           <h2 class="mt-1 text-2xl font-semibold tracking-[0.08em]">{{ currentItem.name }}</h2>
@@ -90,6 +98,7 @@ const relatedCostumes = computed(() => {
             :src="img"
             :alt="`${currentItem.name} 图册 ${idx + 1}`"
             class="h-32 w-full rounded-lg border border-[#FFB703]/45 object-cover"
+            @error="onImageError"
           />
         </div>
       </article>
@@ -108,7 +117,7 @@ const relatedCostumes = computed(() => {
           :to="`/culture/${item.id}`"
           class="rounded-xl border border-[#FFB703]/45 bg-[#1D3557]/35 p-3 transition hover:border-[#FFB703]"
         >
-          <img :src="item.cover" :alt="item.name" class="h-28 w-full rounded-md object-cover" />
+          <img :src="item.cover" :alt="item.name" class="h-28 w-full rounded-md object-cover" @error="onImageError" />
           <p class="mt-2 text-sm">{{ item.name }}</p>
         </RouterLink>
       </div>
