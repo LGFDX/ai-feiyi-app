@@ -1,0 +1,250 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-zhusha: #e63946;
+    --color-shiqing: #1d3557;
+    --color-gold: #ffb703;
+    --color-ink: #000000;
+    --color-rice: #f5f5dc;
+    --color-muted: #a8a8a8;
+    --bg-main: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    position: relative;
+    color: var(--color-rice);
+    background: var(--bg-main);
+    font-family: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong', serif;
+    font-size: 16px;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.25;
+    z-index: -2;
+    background:
+      linear-gradient(rgba(6, 10, 24, 0.4), rgba(6, 10, 24, 0.4)),
+      url('/images/background.jpg') center center / cover no-repeat fixed;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background:
+      radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.42) 100%),
+      linear-gradient(180deg, rgba(230, 57, 70, 0.07), transparent 20%, transparent 80%, rgba(255, 183, 3, 0.07)),
+      repeating-radial-gradient(circle at 0 0, rgba(255, 183, 3, 0.055) 0 16px, transparent 17px 40px),
+      repeating-radial-gradient(circle at 100% 100%, rgba(255, 183, 3, 0.05) 0 12px, transparent 13px 36px);
+    background-size: auto, auto, 500px 500px, 540px 540px;
+    animation: cloud-shift 36s linear infinite;
+  }
+
+  #app {
+    min-height: 100vh;
+    position: relative;
+    z-index: 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+@layer components {
+  .opera-card {
+    position: relative;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 183, 3, 0.9);
+    background:
+      linear-gradient(150deg, rgba(125, 16, 30, 0.82), rgba(43, 13, 31, 0.82)),
+      linear-gradient(180deg, rgba(230, 57, 70, 0.24), rgba(0, 0, 0, 0.3));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 183, 3, 0.32),
+      0 12px 26px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+  }
+
+  .opera-card > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .opera-card::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 183, 3, 0.42);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .opera-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+      radial-gradient(circle at 16px 16px, rgba(255, 183, 3, 0.86) 0 2px, transparent 3px),
+      radial-gradient(circle at calc(100% - 16px) 16px, rgba(255, 183, 3, 0.86) 0 2px, transparent 3px),
+      radial-gradient(circle at 16px calc(100% - 16px), rgba(255, 183, 3, 0.86) 0 2px, transparent 3px),
+      radial-gradient(circle at calc(100% - 16px) calc(100% - 16px), rgba(255, 183, 3, 0.86) 0 2px, transparent 3px),
+      conic-gradient(from 210deg at 24px 24px, rgba(255, 183, 3, 0.28), transparent 35%),
+      conic-gradient(from 330deg at calc(100% - 24px) 24px, rgba(255, 183, 3, 0.28), transparent 35%),
+      conic-gradient(from 120deg at 24px calc(100% - 24px), rgba(255, 183, 3, 0.28), transparent 35%),
+      conic-gradient(from 30deg at calc(100% - 24px) calc(100% - 24px), rgba(255, 183, 3, 0.28), transparent 35%);
+  }
+
+  .opera-card-light {
+    background:
+      linear-gradient(145deg, rgba(245, 245, 220, 0.95), rgba(233, 226, 190, 0.92)),
+      linear-gradient(180deg, rgba(255, 183, 3, 0.12), rgba(230, 57, 70, 0.1));
+    color: #2b1c12;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      0 12px 24px rgba(0, 0, 0, 0.28);
+  }
+
+  .opera-btn {
+    border-radius: 8px;
+    border: 1px solid rgba(255, 183, 3, 0.92);
+    background: linear-gradient(180deg, rgba(230, 57, 70, 0.96), rgba(111, 13, 28, 0.96));
+    color: #ffeecb;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .opera-btn:hover:not(:disabled) {
+    transform: scale(1.05);
+    box-shadow: 0 10px 24px rgba(230, 57, 70, 0.34);
+    filter: brightness(1.05);
+  }
+
+  .opera-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .opera-tab {
+    border-radius: 999px;
+    border: 1px solid rgba(255, 183, 3, 0.5);
+    background: linear-gradient(180deg, rgba(21, 27, 50, 0.95), rgba(36, 24, 60, 0.9));
+    color: rgba(245, 245, 220, 0.92);
+    padding: 0.45rem 1rem;
+    font-size: 0.88rem;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .opera-tab:hover {
+    transform: translateY(-1px);
+    border-color: rgba(255, 183, 3, 0.72);
+  }
+
+  .opera-tab-active {
+    border-color: rgba(255, 183, 3, 0.96);
+    background: linear-gradient(180deg, rgba(230, 57, 70, 0.98), rgba(108, 14, 21, 0.98));
+    box-shadow: 0 8px 20px rgba(230, 57, 70, 0.3);
+  }
+
+  .opera-input,
+  .opera-select,
+  .opera-textarea {
+    border-radius: 8px;
+    border: 1px solid rgba(255, 183, 3, 0.45);
+    background: rgba(14, 19, 37, 0.72);
+    color: var(--color-rice);
+    outline: none;
+  }
+
+  .opera-input:focus,
+  .opera-select:focus,
+  .opera-textarea:focus {
+    border-color: rgba(255, 183, 3, 0.92);
+    box-shadow: 0 0 0 2px rgba(255, 183, 3, 0.2);
+  }
+
+  .opera-range {
+    appearance: none;
+    width: 100%;
+    height: 9px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 183, 3, 0.42);
+    background: linear-gradient(90deg, rgba(65, 65, 65, 0.8), rgba(44, 44, 44, 0.85));
+    outline: none;
+  }
+
+  .opera-range::-webkit-slider-thumb {
+    appearance: none;
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 183, 3, 0.95);
+    background: radial-gradient(circle at 40% 35%, #ffe8ad, #ffb703);
+    box-shadow: 0 0 0 0 rgba(255, 183, 3, 0.28);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+  }
+
+  .opera-range:active::-webkit-slider-thumb {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 6px rgba(255, 183, 3, 0.2);
+  }
+
+  .opera-range::-moz-range-thumb {
+    width: 19px;
+    height: 19px;
+    border: 2px solid rgba(255, 183, 3, 0.95);
+    border-radius: 50%;
+    background: #ffb703;
+    cursor: pointer;
+  }
+
+  .opera-mask-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 8, 14, 0.72);
+    backdrop-filter: blur(3px);
+    z-index: 80;
+  }
+
+  .opera-toast {
+    border-radius: 10px;
+    border: 1px solid rgba(255, 183, 3, 0.8);
+    background: rgba(230, 57, 70, 0.9);
+    color: #ffeec2;
+  }
+}
+
+@keyframes cloud-shift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(-65px, -34px, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
