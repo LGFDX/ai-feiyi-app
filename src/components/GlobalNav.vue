@@ -25,7 +25,7 @@ function isItemActive(path) {
   <header class="site-nav-wrap">
     <div class="site-nav-inner">
       <p class="site-nav-meta">中国 · 非遗 · Intangible Cultural Heritage</p>
-      <h1 class="site-nav-title">【细钗礼衣】 【绢花】 妆容</h1>
+      <h1 class="site-nav-title">妆遗记</h1>
       <nav class="site-nav-tabs" aria-label="全局导航">
         <RouterLink
           v-for="item in navItems"
