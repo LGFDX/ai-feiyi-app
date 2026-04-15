@@ -2,10 +2,11 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
-    base: '/ai-feyi-app/',
     plugins: [vue()],
+    base: './',
     build: {
         outDir: 'dist',
-        assetsDir: 'assets', 
+        assetsDir: 'assets',
+        emptyOutDir: true
     }
 })
